@@ -36,7 +36,12 @@ public class Main {
         //matrix_calc44.matrix_mas_setval("file1.txt");
             matrix_calc matrix_calc44 = matrix_calc.matrix_add(matrix_calc11, matrix_calc33);
             System.out.println("\n"+matrix_calc44.matr_toString());
-        }
+
+        matrix_calc11.matrix_mas_setval("file1.txt");
+        matrix_calc matrix_calc1111 = matrix_calc11.matrix_transpone();
+        matrix_calc1111.matrix_writer("file4.txt");}
+
+
         catch (Exception exc) {
             System.out.println(exc);
         }
