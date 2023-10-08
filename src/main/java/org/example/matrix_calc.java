@@ -34,10 +34,10 @@ public class matrix_calc {
     public String dsize_get(matrix_calc matr){
         return (((Integer)this.m).toString()+ "x" + ((Integer)this.n).toString());
     }
-    public int matrix_mas_setval() {
+    public int matrix_mas_setval(String path1) {
         try {
             //Scanner scanner = new Scanner(System.in);
-            File file1 = new File("file1.txt");
+            File file1 = new File(path1);
             FileReader filereader = new FileReader(file1);
             BufferedReader bufferedreader = new BufferedReader(filereader);
             String line1;
@@ -85,6 +85,52 @@ public class matrix_calc {
         }
         return str11;
     }
+    public matrix_calc matrix_multiply_n(double k){
+        matrix_calc matr1 = new matrix_calc(m, n);
+        for (int i2 = 0; i2<m; i2+=1){
+            for (int j2 = 0; j2<n; j2+=1){
+                matr1.matrix_mas[i2][j2] = this.matrix_mas[i2][j2]*k;}
+            }
+        return matr1;
+        }
+    public static matrix_calc matrix_add(matrix_calc matr1, matrix_calc matr2){
+        if ((matr1.m != matr2.m) || (matr1.n != matr2.n)){
+            matrix_calc matr0 = new matrix_calc();
+            return matr0;
+        }
+        matrix_calc matr3 = new matrix_calc(matr1.m, matr1.n);
+        for (int i2 = 0; i2<matr1.m; i2+=1){
+            for (int j2 = 0; j2<matr1.n; j2+=1){
+                matr3.matrix_mas[i2][j2] = matr1.matrix_mas[i2][j2] + matr2.matrix_mas[i2][j2];}
+        }
+        return matr3;
+    }
+
+    public matrix_calc matrix_transpone(){
+        matrix_calc matr_t = new matrix_calc(this.n, this.m);
+        for (int i4 = 0; i4<m; i4+=1){
+            for (int j4 = 0; j4<m; j4+=1){
+                matr_t.matrix_mas[j4][i4] = this.matrix_mas[i4][j4];
+            }
+        }
+        return matr_t;
+    }
+    public static matrix_calc matrix_multiply(matrix_calc matr1, matrix_calc matr2){
+
+        matrix_calc matr3 = new matrix_calc(matr1.m, matr1.n);
+        //matrix_calc matr2_t = new matrix_calc(matr2.matrix_transpone());
+        for (int i5 = 0; i5<matr1.m; i5+=1){
+            for (int j5 = 0; j5<matr2.n; j5+=1){
+                double k1 = 0;
+                for (int i55 = 0; i55< matr1.n; i55+=1){
+                    k1 += matr1.matrix_mas[i5][i55]*matr2.matrix_mas[i55][j5];
+                }
+                matr3.matrix_mas[i5][j5] = k1;
+                }
+            }
+        return matr3;}
+
+    }
 
 
 
@@ -99,4 +145,6 @@ public class matrix_calc {
 
 
 
-}
+
+
+
