@@ -1,7 +1,12 @@
 package org.example;
+import com.google.common.collect.Collections2;
+
 import java.io.*;
+//import java.util.Collection;
+import java.util.*;
 
 import static java.lang.Math.round;
+//import com.google.common.collect.Collections2;
 //import java.util.Scanner;
 
 public class matrix_calc {
@@ -93,7 +98,7 @@ public class matrix_calc {
             }
             str11 = str11 + ((Double) this.matrix_mas[i1][n - 1]).toString() + "\n";
         }
-        str11 = str11.substring(0, str11.length()-1);
+        str11 = str11.substring(0, str11.length() - 1);
         return str11;
     }
 
@@ -150,46 +155,161 @@ public class matrix_calc {
     public int matrix_writer(String path2) {
         try {
             //File file2 = new File(path2);
-            FileWriter filewriter = new FileWriter(path2,true);
+            FileWriter filewriter = new FileWriter(path2, true);
             //BufferedWriter bufferedwriter = new BufferedWriter(filewriter);
             filewriter.write(this.matr_toString());
             //filewriter.append("")
             filewriter.write("\n\n\n");
             filewriter.close();
-        }
-        catch (IOException exc) {
+        } catch (IOException exc) {
             System.out.println(exc);
         }
-        return 0;}
-        //@Override
-        public boolean equals(matrix_calc matr6) {
-        if ((this.m != matr6.m)||(this.n != matr6.n)){
+        return 0;
+    }
+
+    //@Override
+    public boolean equals(matrix_calc matr6) {
+        if ((this.m != matr6.m) || (this.n != matr6.n)) {
             return false;
         }
 
         for (int i6 = 0; i6 < m; i6 += 1) {
-                for (int j6 = 0; j6 < n; j6 += 1) {
-                 if (this.matrix_mas[i6][j6] != matr6.matrix_mas[i6][j6]){
-                     return false;
-                 }
-                }
-        }
-        return true;}
-        @Override
-        public int hashCode(){
-            double k3 = 0.0;
-            for (int i7 = 0; i7<this.m; i7 += 1) {
-                for (int j7 = 0; j7 < this.n; j7 += 1) {
-                    k3 += this.matrix_mas[i7][j7];
+            for (int j6 = 0; j6 < n; j6 += 1) {
+                if (this.matrix_mas[i6][j6] != matr6.matrix_mas[i6][j6]) {
+                    return false;
                 }
             }
-            int k31 = Math.round((float)k3);
-            return k31;}
-        //public matrix_calc get_diag(double[] mas3)
-
-
+        }
+        return true;
     }
-}
+
+    @Override
+    public int hashCode() {
+        double k3 = 0.0;
+        for (int i7 = 0; i7 < this.m; i7 += 1) {
+            for (int j7 = 0; j7 < this.n; j7 += 1) {
+                k3 += this.matrix_mas[i7][j7];
+            }
+        }
+        int k31 = Math.round((float) k3);
+        return k31;
+    }
+
+    //public matrix_calc get_diag(double[] mas3)
+    static public matrix_calc get_diag(double[] mas3) {
+        matrix_calc matr7 = new matrix_calc(mas3.length, mas3.length);
+        for (int i73 = 0; i73 < matr7.m; i73 += 1) {
+            matr7.matrix_mas[i73][i73] = mas3[i73];
+        }
+        return matr7;
+    }
+
+    static public matrix_calc get_diag1(int n1) {
+        matrix_calc matr8 = new matrix_calc(n1, n1);
+        for (int i8 = 0; i8 < matr8.m; i8 += 1) {
+            matr8.matrix_mas[i8][i8] = 1.0;
+        }
+        return matr8;
+    }
+
+    static public matrix_calc get_rand_matr(int m2, int n2) {
+        matrix_calc matr9 = new matrix_calc(m2, n2);
+        Random rand = new Random();
+        for (int i9 = 0; i9 < matr9.m; i9 += 1) {
+            for (int j9 = 0; j9 < matr9.n; j9 += 1) {
+                matr9.matrix_mas[i9][j9] = round(200.0 * (rand.nextDouble() - 0.5));
+            }
+        }
+        return matr9;
+    }
+
+    public matrix_calc matr_strip(matrix_calc matr_1, int m3, int n3) {
+        matrix_calc matr10 = new matrix_calc(matr_1.m - 1, matr_1.n - 1);
+        int i10 = 0;
+        int j10 = 0;
+        int i11 = 0;
+        int j11 = 0;
+        for (double[] t11 : matr_1.matrix_mas) {
+            if (i10 == m3) {
+                i10 += 1;
+                continue;
+            }
+            //i10-=1;
+            for (double t12 : t11) {
+                if (j10 == n3) {
+                    j10 += 1;
+                    continue;
+                }
+                //j10-=1;
+                matr10.matrix_mas[i11][j11] = t12;
+                //System.out.println();
+                j11 += 1;
+                j10 += 1;
+                //j10+=2;
+            }
+            j11 = 0;
+            j10 = 0;
+            i11 += 1;
+            i10 += 1;
+            //i10+=2;
+        }
+        return matr10;
+    }
+
+    public double get_det() {
+        //Integer[] d = new Integer[this.m];
+        // Collection<Double> ArrayList;
+        ArrayList<Integer> d2 = new ArrayList<>();
+        //Collections.
+        for (int i = 0; i < m; i += 1) {
+            d2.add(i);
+            //d[i] = i;
+        }
+        //Collections2.permutations()
+        Collection<List<Integer>> d1 = Collections2.permutations(d2);
+        double det1 = 0;
+        for (List<Integer> a1 : d1) {
+            double l1 = 1.0;
+            int p1 = 0;
+            for (int i11 = 0; i11 < m; i11 += 1) {
+                for (int i111 = i11 + 1; i111 < m; i111 += 1) {
+                    if (a1.get(i11) > a1.get(i111)) {
+                        p1 += 1;
+                    }
+                }
+                //a1.subList(i11,m-1);
+            }
+            for (int j = 0; j < n; j += 1) {
+                l1 *= this.matrix_mas[j][a1.get(j)];
+
+
+            }
+            det1 += Math.pow(-1, p1 % 2) * l1;
+        }
+        return det1;}
+        public static matrix_calc get_rev_matrix(matrix_calc matr11){
+        matrix_calc matr12 = new matrix_calc(matr11.m, matr11.n);
+        double det_matr11 = matr11.get_det();
+        for (int i15 = 0; i15<matr11.m; i15+=1){
+            for (int j15=0; j15<matr11.n; j15+=1){
+                //double det_matr11 = matr11.get_det();
+                matrix_calc matr11_1 = matr11.matr_strip(matr11, i15, j15);
+                matr12.matrix_mas[i15][j15] = Math.pow(-1, (i15+j15)%2)*matr11_1.get_det()/det_matr11;
+                //matrix_calc matr120 matr12
+            }
+        }
+        matrix_calc matr120 = matr12.matrix_transpone();
+        return matr120;}
+
+        }
+
+
+
+    
+
+
+    
+
 
 
 
