@@ -11,15 +11,26 @@ import java.util.Random;
 import static java.lang.Math.round;
 
 final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immut> {
-    final private Integer m;
-    final private Integer n;
-    final private Double[][] matrix_mas;
+    private final Integer m;
+    private final Integer n;
+    private final Double[][] matrix_mas;
     matrix_calc_immut() {
         this.matrix_mas = new Double[0][0];
         this.m = 0;
         this.n = 0;
     }
 
+    matrix_calc_immut(int m1, int n1, double[][] mas_m) {
+        this.m = m1;
+        this.n = n1;
+        this.matrix_mas = new Double[m1][n1];
+        for(int ik = 0; ik<m; ik+=1){
+            for(int jk = 0; jk<n; jk+=1){
+                this.matrix_mas[ik][jk] = mas_m[ik][jk];
+
+            }
+        }
+    }
     matrix_calc_immut(int m1, int n1) {
         this.m = m1;
         this.n = n1;
@@ -31,7 +42,7 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
         this.n = matr1.n;
         this.matrix_mas = matr1.matrix_mas;
     }
-    <T11>matrix_calc_immut(matr_gen_el<T11>[][] gen_el_mas, int m11, int n11){
+    /*<T11>matrix_calc_immut(matr_gen_el<T11>[][] gen_el_mas, int m11, int n11){
         this.m = m11;
         this.n = n11;
         this.matrix_mas = new Double[m11][n11];
@@ -41,6 +52,15 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
             }
 
         }
+    }*/
+    <S1,S2,S3,S4>matrix_calc_immut(matr_gen_el<S1> g1, matr_gen_el<S2> g2, matr_gen_el<S3> g3, matr_gen_el<S4> g4){
+        this.matrix_mas = new Double[2][2];
+        this.m = (Integer)2;
+        this.n = (Integer)2;
+        matrix_mas[0][0] = g1.get_numeric_format(g1.m_el1);
+        matrix_mas[0][1] = g2.get_numeric_format(g2.m_el1);
+        matrix_mas[1][0] = g3.get_numeric_format(g3.m_el1);
+        matrix_mas[1][1] = g4.get_numeric_format(g4.m_el1);
     }
   
     //public int matrix_mas_set(double[][] matr_mas)
@@ -109,42 +129,49 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
     }
 
     public matrix_calc_immut matrix_multiply_n(double k) {
-        matrix_calc_immut matr1 = new matrix_calc_immut(m, n);
+        double[][] mas_m1 = new double[m][n];
+        //matrix_calc_immut matr1 = new matrix_calc_immut(m, n);
         for (int i2 = 0; i2 < m; i2 += 1) {
             for (int j2 = 0; j2 < n; j2 += 1) {
-                matr1.matrix_mas[i2][j2] = this.matrix_mas[i2][j2] * k;
+                mas_m1[i2][j2] = this.matrix_mas[i2][j2] * k;
             }
         }
+        matrix_calc_immut matr1 = new matrix_calc_immut(m, n, mas_m1);
         return matr1;
     }
     //@Override
     public matrix_calc_immut matrix_add(matrix_calc_immut matr1, matrix_calc_immut matr2) {
+        double[][] mas_m1 = new double[m][n];
         if ((matr1.m != matr2.m) || (matr1.n != matr2.n)) {
             matrix_calc_immut matr0 = new matrix_calc_immut();
             return matr0;
         }
-        matrix_calc_immut matr3 = new matrix_calc_immut(matr1.m, matr1.n);
+        //matrix_calc_immut matr3 = new matrix_calc_immut(matr1.m, matr1.n);
         for (int i2 = 0; i2 < matr1.m; i2 += 1) {
             for (int j2 = 0; j2 < matr1.n; j2 += 1) {
-                matr3.matrix_mas[i2][j2] = matr1.matrix_mas[i2][j2] + matr2.matrix_mas[i2][j2];
+                mas_m1[i2][j2] = matr1.matrix_mas[i2][j2] + matr2.matrix_mas[i2][j2];
             }
         }
+        matrix_calc_immut matr3 = new matrix_calc_immut(matr1.m, matr1.n, mas_m1);
         return matr3;
     }
 
     public matrix_calc_immut matrix_transpone() {
-        matrix_calc_immut matr_t = new matrix_calc_immut(this.n, this.m);
+        double[][] mas_m1 = new double[m][n];
+        //matrix_calc_immut matr_t = new matrix_calc_immut(this.n, this.m);
         for (int i4 = 0; i4 < m; i4 += 1) {
             for (int j4 = 0; j4 < m; j4 += 1) {
-                matr_t.matrix_mas[j4][i4] = this.matrix_mas[i4][j4];
+                //matr_t.matrix_mas[j4][i4] = this.matrix_mas[i4][j4];
+                mas_m1[j4][i4] = this.matrix_mas[i4][j4];
             }
         }
+        matrix_calc_immut matr_t = new matrix_calc_immut(this.n, this.m, mas_m1);
         return matr_t;
     }
 
     public matrix_calc_immut matrix_multiply(matrix_calc_immut matr1, matrix_calc_immut matr2) {
-
-        matrix_calc_immut matr3 = new matrix_calc_immut(matr1.m, matr1.n);
+        double[][] mas_m1 = new double[m][n];
+        //matrix_calc_immut matr3 = new matrix_calc_immut(matr1.m, matr1.n);
         //matrix_calc_immut matr2_t = new matrix_calc_immut(matr2.matrix_transpone());
         for (int i5 = 0; i5 < matr1.m; i5 += 1) {
             for (int j5 = 0; j5 < matr2.n; j5 += 1) {
@@ -152,9 +179,11 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
                 for (int i55 = 0; i55 < matr1.n; i55 += 1) {
                     k1 += matr1.matrix_mas[i5][i55] * matr2.matrix_mas[i55][j5];
                 }
-                matr3.matrix_mas[i5][j5] = k1;
+                //matr3.matrix_mas[i5][j5] = k1;
+                mas_m1[i5][j5] = k1;
             }
         }
+        matrix_calc_immut matr3 = new matrix_calc_immut(matr1.m, matr1.n, mas_m1);
         return matr3;
     }
 
@@ -203,34 +232,43 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
 
     //public matrix_calc_immut get_diag(double[] mas3)
     public matrix_calc_immut get_diag(double[] mas3) {
-        matrix_calc_immut matr7 = new matrix_calc_immut(mas3.length, mas3.length);
-        for (int i73 = 0; i73 < matr7.m; i73 += 1) {
-            matr7.matrix_mas[i73][i73] = mas3[i73];
+        double[][] mas_m1 = new double[mas3.length][mas3.length];
+        //matrix_calc_immut matr7 = new matrix_calc_immut(mas3.length, mas3.length);
+        for (int i73 = 0; i73 < mas3.length; i73 += 1) {
+            //matr7.matrix_mas[i73][i73] = mas3[i73];
+            mas_m1[i73][i73] = mas3[i73];
         }
+        matrix_calc_immut matr7 = new matrix_calc_immut(mas3.length, mas3.length, mas_m1);
         return matr7;
     }
 
      public matrix_calc_immut get_diag1(int n1) {
-        matrix_calc_immut matr8 = new matrix_calc_immut(n1, n1);
-        for (int i8 = 0; i8 < matr8.m; i8 += 1) {
-            matr8.matrix_mas[i8][i8] = 1.0;
+        double[][] mas_m = new double[n1][n1];
+        //matrix_calc_immut matr8 = new matrix_calc_immut((Integer)n1, (Integer) n1);
+        for (int i8 = 0; i8 < n1; i8 += 1) {
+            //matr8.matrix_mas[i8][i8] = 1.0;
+            mas_m[i8][i8]= 1.0;
         }
+        matrix_calc_immut matr8 = new matrix_calc_immut((Integer)n1, (Integer) n1, mas_m);
         return matr8;
     }
 
      public matrix_calc_immut get_rand_matr(int m2, int n2) {
-        matrix_calc_immut matr9 = new matrix_calc_immut(m2, n2);
+        double[][] mas_m1 = new double[m2][n2];
+        //matrix_calc_immut matr9 = new matrix_calc_immut(m2, n2);
         Random rand = new Random();
-        for (int i9 = 0; i9 < matr9.m; i9 += 1) {
-            for (int j9 = 0; j9 < matr9.n; j9 += 1) {
-                matr9.matrix_mas[i9][j9] = (double) round(200.0 * (rand.nextDouble() - 0.5));
+        for (int i9 = 0; i9 < m2; i9 += 1) {
+            for (int j9 = 0; j9 < n2; j9 += 1) {
+                mas_m1[i9][j9] = (double) round(200.0 * (rand.nextDouble() - 0.5));
             }
         }
+        matrix_calc_immut matr9 = new matrix_calc_immut(m2, n2, mas_m1);
         return matr9;
     }
 
     public matrix_calc_immut matr_strip(matrix_calc_immut matr_1, int m3, int n3) {
-        matrix_calc_immut matr10 = new matrix_calc_immut(matr_1.m - 1, matr_1.n - 1);
+        double[][] mas_m1 = new double[matr_1.m][matr_1.n];
+        //  matrix_calc_immut matr10 = new matrix_calc_immut(matr_1.m - 1, matr_1.n - 1);
         int i10 = 0;
         int j10 = 0;
         int i11 = 0;
@@ -247,7 +285,8 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
                     continue;
                 }
                 //j10-=1;
-                matr10.matrix_mas[i11][j11] = t12;
+                //matr10.matrix_mas[i11][j11] = t12;
+                mas_m1[i11][j11] = t12;
                 //System.out.println();
                 j11 += 1;
                 j10 += 1;
@@ -259,6 +298,7 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
             i10 += 1;
             //i10+=2;
         }
+        matrix_calc_immut matr10 = new matrix_calc_immut(matr_1.m - 1, matr_1.n - 1, mas_m1);
         return matr10;
     }
 
@@ -294,16 +334,19 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
         }
         return det1;}
     public matrix_calc_immut get_rev_matrix(matrix_calc_immut matr11){
-        matrix_calc_immut matr12 = new matrix_calc_immut(matr11.m, matr11.n);
+        double[][] mas_m1 = new double[matr11.m][matr11.n];
+        //matrix_calc_immut matr12 = new matrix_calc_immut(matr11.m, matr11.n);
         double det_matr11 = matr11.get_det();
         for (int i15 = 0; i15<matr11.m; i15+=1){
             for (int j15=0; j15<matr11.n; j15+=1){
                 //double det_matr11 = matr11.get_det();
                 matrix_calc_immut matr11_1 = matr11.matr_strip(matr11, i15, j15);
-                matr12.matrix_mas[i15][j15] = Math.pow(-1, (i15+j15)%2)*matr11_1.get_det()/det_matr11;
+                //matr12.matrix_mas[i15][j15] = Math.pow(-1, (i15+j15)%2)*matr11_1.get_det()/det_matr11;
                 //matrix_calc_immut matr120 matr12
+                mas_m1[i15][j15] = Math.pow(-1, (i15+j15)%2)*matr11_1.get_det()/det_matr11;
             }
         }
-        matrix_calc_immut matr120 = matr12.matrix_transpone();
+        matrix_calc_immut matr12 = new matrix_calc_immut(matr11.m, matr11.n, mas_m1);
+        matrix_calc_immut matr120 = new matrix_calc_immut(matr12.matrix_transpone());
         return matr120;}
 }
