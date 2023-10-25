@@ -67,7 +67,17 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
     public Double[][] matrix_mas_get() {
         return this.matrix_mas;
     }
-    
+    public Double[] matrix_mas_get_row(int n_r) {
+        return this.matrix_mas[n_r];
+    }
+    public double[] matrix_mas_get_column(int n_col) {
+        double[]col = new double[this.m];
+        for (int ic = 0; ic<m;ic+=1)
+        {
+            col[ic] = this.matrix_mas[ic][n_col];
+        }
+        return col;
+    }
 
     public String dsize_get(matrix_calc_immut matr) {
         return (((Integer) this.m).toString() + "x" + ((Integer) this.n).toString());
@@ -203,7 +213,8 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
     }
 
     //@Override
-    public boolean equals(matrix_calc_immut matr6) {
+    public boolean equals(matrix_calc_immut matr6){
+    try{
         if ((this.m != matr6.m) || (this.n != matr6.n)) {
             return false;
         }
@@ -216,6 +227,10 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
             }
         }
         return true;
+    }
+    catch (Exception exc10){
+        return false;
+    }
     }
 
     @Override

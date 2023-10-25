@@ -35,6 +35,18 @@ public class matrix_calc {
     public double[][] matrix_mas_get() {
         return this.matrix_mas;
     }
+    public double[] matrix_mas_get_row(int n_r) {
+        return this.matrix_mas[n_r];
+    }
+    public double[] matrix_mas_get_column(int n_col) {
+        double[]col = new double[this.m];
+        for (int ic = 0; ic<m;ic+=1)
+        {
+            col[ic] = this.matrix_mas[ic][n_col];
+        }
+        return col;
+    }
+
 
     public int matrix_mas_set(double[][] matr_mas) {
         this.matrix_mas = matr_mas;
