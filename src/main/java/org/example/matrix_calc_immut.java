@@ -42,6 +42,19 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
         this.n = matr1.n;
         this.matrix_mas = matr1.matrix_mas;
     }
+    matrix_calc_immut(matrix_calc matr1) {
+        this.m = matr1.matrix_mas_get().length;
+        this.n = matr1.matrix_mas_get()[0].length;
+        this.matrix_mas = new Double[m][n];
+        for (int i = 0; i<m; i+=1)
+            for (int j = 0; j<n; j+=1)
+            {
+                this.matrix_mas[i][j] = matr1.matrix_mas_get()[i][j];
+
+            }
+
+        //this.matrix_mas = matr1.matrix_mas_get();
+    }
     /*<T11>matrix_calc_immut(matr_gen_el<T11>[][] gen_el_mas, int m11, int n11){
         this.m = m11;
         this.n = n11;
@@ -83,7 +96,7 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
         return (((Integer) this.m).toString() + "x" + ((Integer) this.n).toString());
     }
 
-    public int matrix_mas_setval(String path1) {
+    /*public int matrix_mas_setval(String path1) {
         try {
             //Scanner scanner = new Scanner(System.in);
             File file1 = new File(path1);
@@ -124,7 +137,7 @@ final public class matrix_calc_immut implements mcalc_interface<matrix_calc_immu
             System.out.println(exc);
         }
         return 0;
-    }
+    }*/
 
     public String matr_toString() {
         String str11 = "";

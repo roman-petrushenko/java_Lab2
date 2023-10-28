@@ -9,9 +9,33 @@ public class Main {
 
             matrix_calc matr1 = new matrix_calc(3,3);
             matrix_calc matr2 = new matrix_calc(3,3);
+            //matrix_calc_immut matr111 = new matrix_calc_immut(matr1);
+            /*System.out.println(matr1.matr_toString());
+            System.out.println(matr2.matr_toString());
+            System.out.println(matr111.matr_toString());*/
             matr1.matrix_mas_setval("file9.txt");
             matr2.matrix_mas_setval("file10.txt");
-            matrix_calc matr3 = matrix_calc.matrix_add(matr1, matr2);
+            /*matrix_calc_immut matr111 = new matrix_calc_immut(matr1);
+            System.out.println();
+            System.out.println(matr1.matr_toString());
+            System.out.println();
+            System.out.println(matr2.matr_toString());
+            System.out.println();
+            System.out.println(matr111.matr_toString());
+            System.out.println();*/
+            matrix_calc matr6 = matrix_calc.get_rev_matrix(matr1);
+            System.out.println();
+            System.out.println(matr1.matr_toString());
+            System.out.println();
+            System.out.println(matr1.get_det());
+            System.out.println();
+            matrix_calc_immut matr66 = new matrix_calc_immut(matr6);
+            System.out.println(matr66.matr_toString());
+            System.out.println();
+            System.out.println(matrix_calc.matrix_multiply(matr6, matr1).matr_toString());
+
+
+            /*matrix_calc matr3 = matrix_calc.matrix_add(matr1, matr2);
             matr3.matrix_writer("file11.txt");
             matrix_calc matr4 = matrix_calc.matrix_multiply(matr1, matr2);
             matr4.matrix_writer("file11.txt");
@@ -64,7 +88,7 @@ public class Main {
             matrix_calc_immut matr13 = new matrix_calc_immut(mel1, mel2, mel3, mel4);
             matrix_calc_immut matr14 = matr13.get_rev_matrix(matr13);
             matr13.matrix_writer("file14.txt");
-            matr14.matrix_writer("file14.txt");
+            matr14.matrix_writer("file14.txt");*/
 
 
 

@@ -5,7 +5,7 @@ public interface mcalc_interface<T> {
     ///double[][] matrix_mas;
     public Double[][] matrix_mas_get();
     //public int matrix_mas_set(double[][] matr_mas);
-    public int matrix_mas_setval(String path1);
+  // public int matrix_mas_setval(String path1);
     public String matr_toString();
     public T matrix_multiply_n(double k);
     public T matrix_add(T matr1, T matr2);
